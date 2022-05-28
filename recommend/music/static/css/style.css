@@ -1,0 +1,205 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  background: #eee url("../img/82fLDu4.jpg") no-repeat center;
+  background-size: cover;
+  font-family: "Open Sans", sans-serif;
+}
+
+.music-player {
+  position: relative;
+  width: 350px;
+  height: 290px;
+  margin: 150px auto;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  background: #222;
+  overflow: hidden;
+  z-index: 0;
+}
+.music-player img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: -1;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  filter: blur(2px);
+}
+.music-player .info {
+  width: 100%;
+  height: 100px;
+  background: #222;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  position: relative;
+}
+.music-player .info .jp-playlist li {
+  display: none;
+}
+.music-player .info .jp-playlist li a {
+  font-size: 30px;
+  font-weight: 300;
+  text-decoration: none;
+  color: #fff;
+  color: rgba(225, 225, 225, 0.4);
+}
+.music-player .info .jp-playlist li a span {
+  font-size: 14px;
+  display: block;
+  margin-top: 10px;
+}
+.music-player .info .jp-playlist li.jp-playlist-current {
+  display: block;
+}
+.music-player .info .jp-playlist li .jp-free-media, .music-player .info .jp-playlist li .jp-playlist-item-remove {
+  display: none;
+}
+.music-player .info .left, .music-player .info .right {
+  width: 25px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+.music-player .info .right {
+  left: auto;
+  right: 30px;
+}
+.music-player .info [class^=icon-] {
+  margin: 0 0 10px;
+}
+.music-player .info .center {
+  padding: 20px 0 0;
+}
+.music-player .progress, .music-player .volume-level {
+  width: 100%;
+  height: 5px;
+  display: block;
+  background: #000;
+  position: absolute;
+  bottom: 0px;
+  cursor: pointer;
+  border: none;
+}
+.music-player .progress .ui-slider-range, .music-player .volume-level .ui-slider-range {
+  display: block;
+  background: #ed553b;
+  height: 5px;
+  border-radius: 0;
+}
+.music-player .progress .ui-slider-handle, .music-player .volume-level .ui-slider-handle {
+  position: absolute;
+  top: -8px;
+  width: 8px;
+  height: 22px;
+  background: url("../img/3iirf2f.png") no-repeat center;
+  border: none;
+  outline: none;
+  margin: 0 0 0 -3px;
+  cursor: move;
+}
+.music-player .controls {
+  text-align: center;
+  width: 100%;
+  height: 190px;
+  background: #982e4b;
+  background: rgba(152, 46, 75, 0.6);
+}
+.music-player .controls .current {
+  font-size: 48px;
+  color: #fff;
+  color: rgba(225, 225, 225, 0.4);
+  padding: 15px 0 20px;
+}
+.music-player .controls .play-controls a {
+  display: inline-block;
+  width: 35px;
+  height: 40px;
+  margin: 0 30px;
+}
+.music-player .controls .volume-level {
+  position: relative;
+  bottom: auto;
+  width: 200px;
+  height: 2px;
+  margin: 30px auto 0;
+  background: rgba(225, 225, 225, 0.3);
+}
+.music-player .controls .volume-level .ui-slider-range {
+  height: 2px;
+}
+.music-player .controls .volume-level .ui-slider-handle {
+  top: -8px;
+  margin-left: -9px;
+  width: 22px;
+  height: 22px;
+  background-image: url("../img/V5i67V2.png");
+}
+.music-player .controls .volume-level .icon-volume-up, .music-player .controls .volume-level .icon-volume-down {
+  position: absolute;
+  right: -34px;
+  top: -8px;
+  width: 22px;
+}
+.music-player .controls .volume-level .icon-volume-down {
+  right: auto;
+  left: -27px;
+}
+
+[class^=icon-] {
+  width: 18px;
+  height: 18px;
+  background: url("../img/E09T8tf.png") no-repeat center;
+  display: block;
+}
+
+.icon-shuffle {
+  background-image: url("../img/AQAxRxS.png");
+}
+.icon-heart {
+  background-image: url("../img/E09T8tf.png");
+}
+.icon-repeat {
+  background-image: url("../img/338F8MX.png");
+}
+.icon-share {
+  background-image: url("../img/PGIC6ME.png");
+}
+.icon-previous {
+  background-image: url("../img/LIqj0nr.png");
+}
+.icon-play {
+  background-image: url("../img/xlBv5aR.png");
+}
+.icon-pause {
+  background-image: url("../img/lIhwduj.png");
+}
+.icon-next {
+  background-image: url("../img/Mb6Nzj5.png");
+}
+.icon-volume-up {
+  background-image: url("../img/qqdoddi.png");
+}
+.icon-volume-down {
+  background-image: url("../img/3iirf2f.png");
+}
+
+.copyrights {
+  text-align: center;
+  text-transform: capitalize;
+  margin: 50px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.copyrights a {
+  color: rgba(152, 46, 75, 0.9);
+  text-decoration: none;
+}

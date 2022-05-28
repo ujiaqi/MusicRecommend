@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>{{ content.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+<link rel='stylesheet' href='{% static 'css/reset.min.css' %}'>
+<link rel='stylesheet' href='{% static 'css/open.css' %}'><link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="music-player">
+  <!--<div style="background-image: url(https://i.imgur.com/yqB0erk.jpg);" class="album"></div>-->
+  
+  <div class="info">
+    
+    <div class="left">
+      <a href="javascript:;" class="icon-shuffle"></a>
+      <a href="javascript:;" class="icon-heart"></a>
+    </div>
+    
+    <div class="center">
+      <div class="jp-playlist">
+        <ul>
+          <li></li>
+        </ul>
+      </div> 
+    </div>
+    
+    <div class="right">
+      <a href="javascript:;" class="icon-repeat"></a>
+      <a href="javascript:;"  class="icon-share"></a>
+    </div>
+    
+    <div class="progress"></div>
+    
+  </div>
+{#   <div>{{ content }}</div>#}
+  <div class="controls">
+    <div class="current jp-current-time">00:00</div>
+    <div class="play-controls">
+      <a href="javascript:;" id="previous" class="icon-previous jp-previous" title="previous"></a>
+{#      <a href="javascript:;" class="icon-previous jp-previous" title="previous"></a>#}
+      <a href="javascript:;" class="icon-play jp-play" title="play"></a>
+
+      <a href="javascript:;" class="icon-pause jp-pause" title="pause"></a>
+{#      <a href="javascript:;"  class="icon-next jp-next" title="next"></a>#}
+        {% csrf_token %}
+      <a href="javascript:" id="predict"  class="icon-next  jp-next" title="next"></a>
+    </div>
+    <div class="volume-level">
+      <a href="javascript:;" class="icon-volume-up" title="max volume"></a>
+      <a href="javascript:;" class="icon-volume-down" title="mute"></a>
+    </div>
+  </div>
+  
+  <div id="jquery_jplayer" class="jp-jplayer"></div>
+  
+</div>
+
+<p class="copyrights">
+  毕业设计：<a href='javascript:;'>基于内容的音乐系统设计与开发</a>  &nbsp;&nbsp;作者： <a href='javascript:;'>俞家琪</a>
+</p>
+<!-- partial -->
+
+{#<script  src="{% static 'js/script.js' %}"></script>#}
+<script src='{% static 'js/jquery.min.js' %}'></script>
+<script src='{% static 'js/jquery-ui.min.js' %}'></script>
+<script src='{% static 'js/jplayer.playlist.min.js' %}'></script>
+<script src='{% static 'js/jquery.jplayer.min.js' %}'></script>
+    <script>
+    $(document).ready(function(){
+    var firstPlay = [
+      {% for item in content %}
+          {
+             title: "{{ item.title }}",
+              artist: "{{ item.artist }}",
+              mp3: "{{ item.mp3 }}",
+              poster: "{{ item.poster }}",
+              init_index:"{{ item.init_index }}"
+          },
+      {% endfor %}
+      ];
+
+  var playlist = [
+      {% for item in content %}
+          {
+             title: "{{ item.title }}",
+              artist: "{{ item.artist }}",
+              mp3: "{{ item.mp3 }}",
+              poster: "{{ item.poster }}",
+              init_index:"{{ item.init_index }}"
+          },
+      {% endfor %}
+      ];
+
+  console.log("_______________");
+  console.log(firstPlay);
+  console.log("_______________");
+  console.log(playlist);
+  var cssSelector = {
+    jPlayer: "#jquery_jplayer",
+    cssSelectorAncestor: ".music-player"
+  };
+
+  var options = {
+    swfPath: "https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/jquery.jplayer/Jplayer.swf",
+    supplied: "ogv, m4v, oga, mp3",
+    volumechange: function(event) {
+      $( ".volume-level" ).slider("value", event.jPlayer.options.volume);
+    },
+    timeupdate: function(event) {
+      $( ".progress" ).slider("value", event.jPlayer.status.currentPercentAbsolute);
+    }
+  };
+
+  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+  var PlayerData = $(cssSelector.jPlayer).data("jPlayer");
+
+
+  // Create the volume slider control
+  $( ".volume-level" ).slider({
+     animate: "fast",
+		max: 1,
+		range: "min",
+		step: 0.01,
+		value : $.jPlayer.prototype.options.volume,
+		slide: function(event, ui) {
+			$(cssSelector.jPlayer).jPlayer("option", "muted", false);
+			$(cssSelector.jPlayer).jPlayer("option", "volume", ui.value);
+		}
+  });
+
+  // Create the progress slider control
+  $( ".progress" ).slider({
+		animate: "fast",
+		max: 100,
+		range: "min",
+		step: 0.1,
+		value : 0,
+		slide: function(event, ui) {
+			var sp = PlayerData.status.seekPercent;
+			if(sp > 0) {
+				// Move the play-head to the value and factor in the seek percent.
+				$(cssSelector.jPlayer).jPlayer("playHead", ui.value * (100 / sp));
+			} else {
+				// Create a timeout to reset this slider to zero.
+				setTimeout(function() {
+					 $( ".progress" ).slider("value", 0);
+				}, 0);
+			}
+		}
+	});
+  var csrfToken = $("[name='csrfmiddlewaretoken']").val();
+  $("#predict").click(
+      function () {
+        $.post("/predicting",{"csrfmiddlewaretoken":csrfToken, title: playlist[0].title, mp3: playlist[0].mp3, init_index: playlist[0].init_index} ,function(data){
+          playlist.pop();
+          playlist.push({
+              title: data[0].title,
+              artist: data[0].artist,
+              mp3: data[0].mp3,
+              poster: data[0].poster,
+              init_index: data[0].init_index
+          },)
+          console.log(playlist)
+          {#alert("Data Loaded: " + data);#}
+          {#var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);#}
+            myPlaylist.setPlaylist(playlist)
+          {#var PlayerData = $(cssSelector.jPlayer).data("jPlayer");#}
+
+        });
+      }
+  )
+
+   $("#previous").click(
+       function () {
+            $.post("/previous", {"csrfmiddlewaretoken":csrfToken, title: firstPlay[0].title, mp3: firstPlay[0].mp3, init_index: firstPlay[0].init_index} ,function(data){
+                playlist.pop();
+                playlist.push({
+                    title: data[0].title,
+                      artist: data[0].artist,
+                      mp3: data[0].mp3,
+                      poster: data[0].poster,
+                    init_index: data[0].init_index
+                },)
+               myPlaylist.setPlaylist(playlist)
+            });
+       }
+   )
+
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>music player</title>
+
+  <!-- <link rel="stylesheet" href="css/styles.css"> -->
+  <link rel="stylesheet" href="{% static 'project/css/jquery.mCustomScrollbar.css' %}">
+  <link rel="stylesheet" href="{% static 'project/css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'project/css/iconfont.css' %}">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+  <link rel="stylesheet/less" type="text/css" href="{% static 'project/css/styles.less' %}">
+  <script src="{% static 'project/less/less.js' %}" type="text/javascript"></script>
+
+  <script src="{% static 'project/js/jquery.js' %}"></script>
+  <script src="{% static 'project/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+  <script src="{% static 'project/js/playerlist.js' %}"></script>
+  <script src="{% static 'project/js/index.js' %}"></script>
+
+</head>
+
+<body>
+  <div class="player">
+
+    <div class="trackInfo">
+      <div class="albumPic rotate">
+        <div class="mask"></div>
+        <div class="top1"></div>
+        <div class="top2"></div>
+        <div class="cover"></div>
+        <div class="bottom"></div>
+      </div>
+      <div class="trackName">
+        <p></p>
+      </div>
+      <div class="artist"></div>
+    </div>
+
+    <div class="library">
+
+      <div class="searchBar">
+        <i class="search iconfont icon-chazhao"></i>
+        <input id="seach-txt" type="text" placeholder="搜索">
+      </div>
+      <div class="category">
+        <div class="recent">
+          <i class="iconfont icon-gengduo-ver"></i>
+          <i class="iconfont icon-yinfu"></i>
+          <div class="categoryName">最近播放</div>
+        </div>
+
+        <div class="dynamic">
+          <i class="iconfont icon-gengduo-ver"></i>
+          <i class="iconfont icon-yinyue"></i>
+          <div class="categoryName">推荐风格</div>
+        </div>
+
+        <div class="gentle">
+          <i class="iconfont icon-gengduo-ver"></i>
+          <i class="iconfont icon-cd"></i>
+          <div class="categoryName">可能喜欢</div>
+        </div>
+
+      </div>
+      <!-- 5list -->
+      <div class="recentContainer listContainer">
+        <div class="back-btn">
+          <i class="back iconfont icon-arrow-simple"></i>
+        </div>
+        <div class="title">最近播放</div>
+        <div class="recentContent songList" data-mcs-theme="minimal-dark">
+        </div>
+      </div>
+
+      <div class="dynamicContainer listContainer">
+        <div class="back-btn">
+          <i class="back iconfont icon-arrow-simple"></i>
+        </div>
+        <div class="title">推荐风格</div>
+        <div class="dynamicContent songList" data-mcs-theme="minimal-dark"></div>
+      </div>
+
+      <div class="gentleContainer listContainer">
+        <div class="back-btn">
+          <i class="back iconfont icon-arrow-simple"></i>
+        </div>
+        <div class="title">可能喜欢</div>
+        <div class="gentleContent songList" data-mcs-theme="minimal-dark"></div>
+      </div>
+
+      <div class="searchContainer listContainer">
+        <div class="back-btn">
+          <i class="back iconfont icon-arrow-simple"></i>
+        </div>
+        <div class="title">Search Result</div>
+        <div class="searchContent songList" data-mcs-theme="minimal-dark">
+        </div>
+        <div class="loader"></div>
+      </div>
+
+      <div class="discoverContainer listContainer">
+        <div class="title">发现好歌</div>
+        <div class="discoverContent songList" data-mcs-theme="minimal-dark"></div>
+      </div>
+
+    </div>
+
+    <div class="myListContainer">
+      <div class="title">推荐列表</div>
+      <div class="myListContent songList" data-mcs-theme="minimal-dark"></div>
+    </div>
+
+    <div class="controls">
+      <div class="progress">
+        <div class="time">
+          <div class="current">0:16</div>
+          <div class="total">2:59</div>
+          <div class="triangle"></div>
+        </div>
+
+        <div class="progressBar">
+          <div class="currentBar"></div>
+          <div class="progressBtn"></div>
+        </div>
+      </div>
+
+      <div class="btnsBar">
+        <i class="prev iconfont icon-shangyishou"></i>
+        <i class="play iconfont icon-bofang"></i>
+        <i class="next iconfont icon-xiayishou"></i>
+        <i class="volumn iconfont icon-yinliang"></i>
+        <i class="mode iconfont icon-shunxu"></i>
+        <i class="like iconfont icon-xin"></i>
+        <i class="list iconfont icon-liebiao"></i>
+      </div>
+
+    </div>
+
+
+    <audio id="audio">
+      <source src="">
+    </audio>
+  </div>
+  <div class="bg"></div>
+
+
+{#  <script type="text/javascript" src="http://localhost:56001/livereload.js">#}
+{#  </script>#}
+</body>
+
+</html>
